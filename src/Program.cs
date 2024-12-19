@@ -1,26 +1,26 @@
-﻿namespace rogalik
-{    
+namespace rogalik
+{
     class Weapon
     {
-        public string? name;
+        public string name;
         public int damage;
     }
 
     class Aid_Kit
     {
-        public string? name;
+        public string name;
         public int hp_healed;
     }
     class Enemy
     {
-        public string? name;
+        public string name;
         public int hp;
         public Weapon weapon = new Weapon();
         public int points;
     }
     class Player
     {
-        public string? name;
+        public string name;
         public int hp = 200;
         public int hp_max = 200;
         public Aid_Kit aid_kit = new Aid_Kit();
@@ -40,7 +40,8 @@
     {
         static void Main(string[] args)
         {
-            List<string> weapon_names = new List<string>() { "Экскалибур", "Меч-кладенец", "Меч Грааля", "Имперский меч", "Бальмунг", "Фламберг" };
+            List<string> weapon_names = new List<string>() { "Экскалибур", "Меч-кладенец", "Меч Грааля", "Бальмунг", "Фламберг" };
+            List<int> weapon_damage = new List<int>() { 10, 20, 30, 50, 80 };
             List<string> enemy_names = new List<string>() { "Обезображенный", "Сердитая толпа", "Странствующий рыцарь",
             "Туманоносец", "Древесный человек", "Клубок змей", "Искажённое дитя", "Могильный волк", "Лесной змей"};
 
@@ -57,8 +58,10 @@
             Console.WriteLine($"\nВаше имя: {player.name}.\n");
 
             Random n1 = new Random();
-            player.weapon.name = weapon_names[n1.Next(weapon_names.Count)];
-            player.weapon.damage = n1.Next(20, 51);
+
+            int weapon_choice_player = n1.Next(0, 5);
+            player.weapon.name = weapon_names[weapon_choice_player];
+            player.weapon.damage = weapon_damage[weapon_choice_player];
 
             int aid_choice = n1.Next(0, 3);
             player.aid_kit.name = aid_names[aid_choice];
@@ -69,8 +72,9 @@
             while (player_is_dead == false)
             {
                 enemy.name = enemy_names[n1.Next(enemy_names.Count)];
-                enemy.weapon.name = weapon_names[n1.Next(weapon_names.Count)];
-                enemy.weapon.damage = n1.Next(20, 51);
+                int weapon_choice_enemy = n1.Next(0, 5);
+                enemy.weapon.name = weapon_names[weapon_choice_enemy];
+                enemy.weapon.damage = weapon_damage[weapon_choice_enemy];
                 enemy.hp = n1.Next(20, 151);
                 enemy.points = n1.Next(10, 51);
                 Console.WriteLine($"{player.name} встречает {enemy.name} ({enemy.hp} hp), его оружие: {enemy.weapon.name} ({enemy.weapon.damage}).");
